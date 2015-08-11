@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<script src="scripts/angular.min.js"></script> 
+<script src="scripts/angular-route.js"></script> 
+
+<body>
+
+<div>
+    <!-- placeholder for views -->
+    <div ng-view="">
+</div>
+
+<script>
+    var app = angular.module("myApp", ['ngRoute']);
+    var controllers = {};
+    controllers.SimpleController = function($scope) {
+        $scope.customers = [
+            { name: 'John Smith', city: "Phoenix" },
+            { name: 'John Doe', city: 'New York' },
+            { name: 'Jane Doe', city: 'San Francisco' }
+        ];
+    };
+    app.controller(controllers);
+    
+    // routes
+    app.config(function($routeProvider){
+        $routeProvider
+            .when('/view1', {
+                controller: 'SimpleController',
+                templateUrl: 'partials/view1.html'
+            })
+            .when('/view2',{
+                controller: 'SimpleController',
+                templateUrl: 'partials/view2.html'
+            })
+            .otherwise({ redirectTo: '/view1' });
+    });
+</script>
+
+</body>
+</html>
+
